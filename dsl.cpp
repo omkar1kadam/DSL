@@ -75,6 +75,26 @@ class student {
 			cout<< "After sorting" << endl;
 			show_details();
 		}
+		void selection_sort(){
+			cout<< "Before sorting" << endl;
+			show_details();
+			
+			for(int i=0; i<size; i++){
+				int smallest_index;
+				for (int j=0; j<size-1;j++){
+					if (data[i] >= data[j]){
+						smallest_index = j;
+					} 
+				}
+				int temp;
+				temp = data[i];
+				data[i] = data[j];
+				data[j] = temp;
+			}
+			
+			cout<< "After sorting" << endl;
+			show_details();
+		}
 };
 
 int main() {
@@ -88,6 +108,7 @@ int main() {
 		cout << " Enter 3 for linear search " << endl;
 		cout << " Enter 4 for binary search " << endl;
 		cout << " Enter 5 for Bubble Sort " << endl;
+		cout << " Enter 6 for Selection Sort " << endl;
 		cout << " Enter your choice : " << endl;
 		cin >> choice;
 
@@ -113,6 +134,9 @@ int main() {
 		}
 		else if (choice == 5){
 			stud.bubble_sort();
+		}
+		else if (choice == 6){
+			stud.selection_sort();
 		}
 		else if (choice == 99) {
 			cout << "exiting" << endl;
