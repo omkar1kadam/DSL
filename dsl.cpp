@@ -55,9 +55,9 @@ class student {
 			
 			bool isSorted;
 			for(int i=0; i<size; i++){
-			isSorted = true;
+				isSorted = true;
 				for(int j=0; j<size-i-1; j++){
-					if (data[j] >= data[j+1]){
+					if (data[j] <= data[j+1]){
 						isSorted = false;
 						
 						int temp;
@@ -79,19 +79,49 @@ class student {
 			cout<< "Before sorting" << endl;
 			show_details();
 			
+			bool isSorted;
 			for(int i=0; i<size; i++){
+				isSorted = true;
 				for (int j=0; j<size-1;j++){
-					if (data[j] >= data[i]){
+					if (data[j] <= data[i]){
+						isSorted = false;
+					
 						int temp;
 						temp = data[i];
 						data[i] = data[j];
 						data[j] = temp;
 					} 
 				}
+				if (isSorted){
+					break;
+				}
 			}
 			
 			cout<< "After sorting" << endl;
 			show_details();
+		}
+		void print_top_5_scores(int which_sort){
+			if (which_sort == 1){
+				bubble_sort();
+			}
+			else if (which_sort == 2){
+				selection_sort();
+			}
+			
+			// printing the top 5 elements
+			if (size >= 5){
+				for (int i=0; i<5; i++){
+					cout << data[i] << endl;
+				}
+			}
+			else if (size == 0){
+				cout << "There are no students " << endl;
+			}
+			else if (size <5){
+				for (int i=0; i<size; i++){
+					cout << data[i] << endl;
+				}
+			}
 		}
 };
 
@@ -107,6 +137,8 @@ int main() {
 		cout << " Enter 4 for binary search " << endl;
 		cout << " Enter 5 for Bubble Sort " << endl;
 		cout << " Enter 6 for Selection Sort " << endl;
+		cout << " Enter 7 for top 5 Scores " << endl;
+		cout << " Enter 99 for exiting " << endl;
 		cout << " Enter your choice : ";
 		cin >> choice;
 
@@ -135,6 +167,13 @@ int main() {
 		}
 		else if (choice == 6){
 			stud.selection_sort();
+		}
+		else if (choice == 7){
+			cout << " Enter 1 for bubble sort" <<  endl;
+			cout << " Enter 2 for selection sort " << endl;
+			int sort_choice;
+			cin >> sort_choice;
+			stud.print_top_5_scores(sort_choice);
 		}
 		else if (choice == 99) {
 			cout << "exiting" << endl;
