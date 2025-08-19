@@ -82,10 +82,9 @@ class student {
 			bool isSorted;
 			for(int i=0; i<size; i++){
 				isSorted = true;
-				for (int j=0; j<size-1;j++){
-					if (data[j] <= data[i]){
+				for (int j=i+1; j<size-1;j++){
+					if (data[i] <= data[j]){
 						isSorted = false;
-					
 						int temp;
 						temp = data[i];
 						data[i] = data[j];
@@ -96,7 +95,6 @@ class student {
 					break;
 				}
 			}
-			
 			cout<< "After sorting" << endl;
 			show_details();
 		}
