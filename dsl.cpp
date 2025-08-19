@@ -7,10 +7,10 @@ class student {
 		int size;
 	public:
 		void fill_input(){
-			cout << "Enter the total number of students: " << endl;
+			cout << "Enter the total number of students: ";
 			cin>>size;
 			for (int i = 0; i<size; i++) {
-				cout << "enter the " << i << "th student roll no. :" << endl;
+				cout << "enter the " << i << "th student roll no. :";
 				cin >> data[i];
 			}
 			cout << "Filling completed! " << endl;
@@ -80,16 +80,14 @@ class student {
 			show_details();
 			
 			for(int i=0; i<size; i++){
-				int smallest_index;
 				for (int j=0; j<size-1;j++){
-					if (data[i] >= data[j]){
-						smallest_index = j;
+					if (data[j] >= data[i]){
+						int temp;
+						temp = data[i];
+						data[i] = data[j];
+						data[j] = temp;
 					} 
 				}
-				int temp;
-				temp = data[i];
-				data[i] = data[j];
-				data[j] = temp;
 			}
 			
 			cout<< "After sorting" << endl;
@@ -109,7 +107,7 @@ int main() {
 		cout << " Enter 4 for binary search " << endl;
 		cout << " Enter 5 for Bubble Sort " << endl;
 		cout << " Enter 6 for Selection Sort " << endl;
-		cout << " Enter your choice : " << endl;
+		cout << " Enter your choice : ";
 		cin >> choice;
 
 		if (choice == 1) {
@@ -120,14 +118,14 @@ int main() {
 		}
 		else if (choice == 3) {
 			int target;
-			cout << "Enter the value you wanna search" << endl;
+			cout << "Enter the value you wanna search";
 			cin >> target;
 			int index = stud.linear_search(target);
 			cout << "Rollno is  at " << index << "th index" << endl;
 		}
 		else if (choice == 4) {
 			int target;
-			cout << "Enter the value you wanna search" << endl;
+			cout << "Enter the value you wanna search";
 			cin >> target;
 			int index = stud.binary_search(target);
 			cout << "Rollno is  at " << index << "th index" << endl;
