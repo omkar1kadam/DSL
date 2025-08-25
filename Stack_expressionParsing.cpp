@@ -82,7 +82,8 @@ class ExpressionParsing{
 			}
 			if(obj.isStackEmpty() && flagValid){
 				cout << "The expression is well form expression TRUE" << endl;
-			} else {
+			}
+			else {
 				cout << "The expression is not well form expression FALSE" << endl;
 			}
 		}
