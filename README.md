@@ -6,7 +6,7 @@ This document provides a summary of the available equipment and setup for depart
 
 ## 💻 Computing Systems
 - **4 × iMacs**
-- **5 × Ryzen 5 (7th Gen) Computers**
+- **6 × Ryzen 5 (7th Gen) Computers**
 - **Dedicated Graphics Card** (for high-performance tasks such as ML, AI, and Graphics projects)
 
 ---
