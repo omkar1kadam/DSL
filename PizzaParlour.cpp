@@ -65,15 +65,32 @@ class CircularQueue {
 
 class PizzaParlour{
 	private:
-		int M; // maximum number of order a customer can order
 		int OIDCount; // generated 
 		CircularQueue q;
+		int totalQuantity =15;// maximum number of order a customer can order
+		int acceptedQuantity = 0;
 	public:
 		PizzaParlour(){
 			OIDCount =0;
 		}
 		void acceptOrder(int qnt){
-			q.enqueue(++OIDCount,qnt);
+			if (acceptedQuantity + qnt > totalQuantity){
+			    cout << "Cant process order";
+			    char choice;
+			    int canTakeOrder = totalQuantity - acceptedQuantity;
+			    cout << "We can give you " << canTakeOrder <<"more pizza. do you want it then enter 'y' if no then enter 'n' :" << endl;
+			    cin>>choice;
+			    if (choice == 'y'){
+			        q.enqueue(++OIDCount,canTakeOrder);
+			        acceptedQuantity += canTakeOrder;
+			    } else {
+			        cout << "Thanku" << endl;
+			    }
+			} else {
+			    q.enqueue(++OIDCount,qnt);
+			    acceptedQuantity += qnt;
+			    cout << acceptedQuantity << endl;
+			}
 		}
 		
 		void deliverOrder(){
@@ -84,14 +101,15 @@ class PizzaParlour{
 			q.display();
 		}
 };
+//
 
 int main(){
 	PizzaParlour p;
 	
 	cout << "Enter" << endl;
-	p.acceptOrder(5);
-	p.acceptOrder(6);
-	p.acceptOrder(7);
+	p.acceptOrder(2);
+	p.acceptOrder(3);
+	p.acceptOrder(15);
 	p.checkOrderStatus();
 	
 	cout << "" << endl;
@@ -102,9 +120,8 @@ int main(){
 	cout << "" << endl;
 	cout << "ReEnter" << endl;
 	
-	p.acceptOrder(8);
+	p.acceptOrder(4);
 	p.checkOrderStatus();
 	
 	return 0;
 }
-
