@@ -114,6 +114,19 @@ public:
             }
         }
     }
+    
+    void countMember(){
+    	int count = 0;
+    	Student *curr;
+    	curr = headSYA;
+    	while (curr) {
+    		if (curr->memberType == "regular") {
+    			count++;
+    		}
+    		curr = curr->next;
+    	}
+    	cout << "Count is: " << count << endl;
+    }
 
     
     void displayList() {
@@ -135,8 +148,9 @@ int main() {
     stud.addNode(123, "President", "pres");
     stud.addNode(789, "omkar4", "regular");
     stud.displayList();
-    stud.deleteNode(456);
+    stud.deleteNode(0);
     stud.displayList();
+    stud.countMember();
 
     return 0;
 }
