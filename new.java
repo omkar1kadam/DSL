@@ -1,13 +1,17 @@
 class Main {
     public static void main(String[] args) {
-        Stack obj = new Stack();
-        // obj.push('1');
-        // obj.push('a');
-        // obj.display();
-        // System.out.println("Try programiz.pro");
-        // obj.pop();
-        // obj.push('*');
-        // obj.display();
+        ExpressionTree et = new ExpressionTree();
+        String prefix = "+--a*bc/def";
+
+        et.buildFromPrefix(prefix);
+
+        System.out.print("Inorder (Non-Recursive): ");
+        et.inorderNonRecursive();
+        System.out.println();
+
+        System.out.print("Postorder (Non-Recursive): ");
+        et.postorderNonRecursive();
+        System.out.println();
     }
 }
 class Node{
@@ -22,22 +26,20 @@ class Node{
     }
 }
 class NodeStack{
-    Node[] stck = new Node[10];
+    Node[] stck = new Node[100];
     int top = -1;
-    void push(char data){
+    void push(Node data){
         if (!isFull()){
             stck[++top] = data;
         } else {
             System.out.println("push func! stack is full");
         }
     }
-    int pop(){
+    Node pop(){
         if (!isEmpty()){
             return stck[top--];
-        } else {
-            System.out.println("pop func! stack is empty");
-            return '\0';
         }
+        return null;
     }
     boolean isFull(){
         return (top == stck.length - 1);
@@ -55,7 +57,7 @@ class NodeStack{
 class ExpressionTree{
     Node root;
     
-    void builFromPrefix(String prefix){
+    void buildFromPrefix(String prefix){
         NodeStack st = new NodeStack();
     
         for (int i = prefix.length()-1; i>= 0; i--){
@@ -91,15 +93,32 @@ class ExpressionTree{
             }
             
             curr = st.pop();
-            
+            System.out.print(curr.data + " ");
+            curr = curr.right;
         }
+    }
+    
+    void postorderNonRecursive(){
+        if (root == null) return;
         
+        NodeStack s1 = new NodeStack();
+        NodeStack s2 = new NodeStack();
+        
+        s1.push(root);
+        
+        while(!s1.isEmpty()){
+            Node temp = s1.pop();
+            s2.push(temp);
+            
+            if(temp.left != null){
+                s1.push(temp.left);
+            }
+            if(temp.right != null){
+                s1.push(temp.right);
+            }
+        }
+        while(!s2.isEmpty()){
+            System.out.print(s2.pop().data + " ");
+        }
     }
 }
-
-
-
-
-
-
-
