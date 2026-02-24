@@ -1,49 +1,105 @@
 class Main {
     public static void main(String[] args) {
-        BinarySearchTree bt = new BinarySearchTree();
+        System.out.println("Try programiz.pro");
+        BinaryTree bt = new BinaryTree();
         bt.addNode(10);
         bt.addNode(5);
         bt.addNode(15);
         bt.display();
-        bt.searchNode(15);
-        bt.deleteNode(15);
-        System.out.println("Try programiz.pro");
+        bt.search(15);
+        bt.delete(15);
+        bt.display();
     }
 }
 class Node{
     int data;
     Node left;
     Node right;
-    
     Node(int d){
-        data = d;
+        data =d;
         left = right = null;
     }
 }
-class BinarySearchTree{
+class BinaryTree{
     Node root;
     
     void addNode(int data){
-        if(root == null){
+        if (root == null){
             root = new Node(data);
             return;
         }
+        
         Node curr = root;
         while(true){
-            if(data<curr.data){
+            if (data<curr.data){
                 if(curr.left == null){
                     curr.left = new Node(data);
-                    break;
+                    return;
                 }
                 curr = curr.left;
-            } else if(data>curr.data){
+            } else if (data>curr.data){
                 if(curr.right == null){
                     curr.right = new Node(data);
-                    break;
+                    return;
                 }
                 curr = curr.right;
             }
         }
+    }
+    void search(int data){
+        Node curr = root;
+        while(true){
+            if(data<curr.data){
+                if(curr.left == null){
+                    System.out.println("Not found");
+                }
+                curr = curr.left;
+            } else if (data > curr.data){
+                if(curr.right == null){
+                    System.out.println("Not found");
+                }
+                curr = curr.right;
+            }
+            
+            if(data == curr.data) {
+                System.out.println("found");
+                return;
+            }
+        }
+    }
+    void delete(int data){
+        root = deleteRec(root,data);
+    }
+    Node deleteRec(Node root,int data){
+        if(root == null){
+            return null;
+        }
+        if (data < root.data){
+            root.left = deleteRec(root.left,data);
+        } else if (data > root.data){
+            root.right = deleteRec(root.right,data);
+        } else{
+            if (root.left == null && root.right == null){
+                return null;
+            }
+            if(root.left == null){
+                return root.right;
+            }
+            if(root.right == null){
+                return root.left;
+            }
+            Node successor = findMin(root.right);
+            root.data = successor.data;
+            root.right = deleteRec(root.right,successor.data);
+            
+        }
+        return root;
+    }
+    Node findMin(Node root){
+        while(root.left != null){
+            root = root.left;
+        }
+        return root;
     }
     void display(){
         //preOrder(root);
@@ -78,32 +134,18 @@ class BinarySearchTree{
         inOrder(root.right);
         System.out.print(root.data+" ");
     }
-    void searchNode(int data){
-        Node curr = root;
-        while(true){
-            if(data<curr.data){
-                if(curr.left == null){
-                    System.out.println("not found");
-                    break;
-                }
-                curr = curr.left;
-            } else if (data > curr.data){
-                if(curr.right == null){
-                    System.out.println("not found");
-                    break;
-                }
-                curr = curr.right;
-            }
-            if(data == curr.data){
-                System.out.println("Found");
-                break;
-            }
-        }
-    }
-    void deleteNode(int data){
-        if (root == null){
-            return;
-        }
-        
-    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
