@@ -21,6 +21,7 @@ class Main {
         //bt.display();
         System.out.println("bfs: ");
         bt.bfs();
+        System.out.println(" ");
         System.out.println("dfs: ");
         bt.dfs();
     }
@@ -60,27 +61,24 @@ class BinaryTree{
             }
         }
     }
-    void search(int data){
+        void search(int data){
         Node curr = root;
-        while(true){
-            if(data<curr.data){
-                if(curr.left == null){
-                    System.out.println("Not found");
-                }
+    
+        while(curr != null){
+            if(data < curr.data){
                 curr = curr.left;
-            } else if (data > curr.data){
-                if(curr.right == null){
-                    System.out.println("Not found");
-                }
+            } 
+            else if(data > curr.data){
                 curr = curr.right;
-            }
-            
-            if(data == curr.data) {
-                System.out.println("found");
+            } 
+            else {
+                System.out.println("Found");
                 return;
             }
         }
-    }
+
+    System.out.println("Not found");
+}
     void delete(int data){
         root = deleteRec(root,data);
     }
@@ -167,8 +165,77 @@ class BinaryTree{
         }
     }
     void dfs(){
-        
+        //preOrderNonRecursion();
+        //inOrderNonRecursion();
+        postOrderNonRecursion();
     }
+    void preOrderNonRecursion(){
+        if(root == null){
+            return;
+        }
+        Stack st = new Stack();
+        st.push(root);
+        
+        while(!st.isEmpty()){
+            Node current = st.pop();
+            System.out.print(current.data+" ");
+            
+            if(current.right != null){
+                st.push(current.right);
+            }
+            if(current.left != null){
+                st.push(current.left);
+            }
+        }
+    }
+    void inOrderNonRecursion(){
+        Stack st = new Stack();
+        Node current = root;
+        
+        while(current != null || !st.isEmpty()) {
+            while(current != null){
+                st.push(current);
+                current = current.left;
+            }
+            current = st.pop();
+            System.out.print(current.data+" ");
+            
+            current = current.right;
+        }
+    }
+    void postOrderNonRecursion(){
+        if(root == null){
+            return;
+        }
+        Stack st1 = new Stack();
+        Stack st2 = new Stack();
+        
+        st1.push(root);
+        
+        while(!st1.isEmpty()){
+            Node current = st1.pop();
+            st2.push(current);
+            
+            if(current.left != null){
+                st1.push(current.left);
+            }
+            if(current.right != null){
+                st1.push(current.right);
+            }
+        }
+        while(!st2.isEmpty()){
+            System.out.print(st2.pop().data+" ");
+        }
+    }
+    // void postOrderNonRecusionUsingOneStack(){
+    //     Stack st = new Stack();
+    //     Node current = root;
+    //     Node lastVisited = null;
+        
+    //     while(current != null || st.isEmpty()){
+            
+    //     }
+    // }
 }
 class Queue {
     Node[] data = new Node[100];
@@ -214,29 +281,61 @@ class Stack{
         top = -1;
     }
     void push(Node value){
-        if(top == -1){
-            top++;
-        }
         if(!isFull()){
-            data[top] = value;
+            data[++top] = value;
         } else {
             System.out.println("stack is full");
         }
+    }
+    Node peek(){
+        if(isEmpty()){
+            return null;
+        }
+        return data[top];
     }
     Node pop(){
         if(isEmpty()){
             System.out.println("stack is empty");
             return null;
             }
-        return data[--top];
+        return data[top--];
     }
     boolean isFull(){
-        return top >= 100;
+        return top == 100-1;
     }
     boolean isEmpty(){
         return top == -1;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
