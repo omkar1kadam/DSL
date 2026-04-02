@@ -93,15 +93,13 @@ void SequentialFile::updateRecord_NOT_USING(string oldname,string newname){
 
 void SequentialFile::updateRecord(string name){
 	fstream finout;
-	int count = 0;
      finout.open("employee.txt",ios::in | ios::out | ios::binary);
 	while(finout.read((char*)&eObj,sizeof(eObj))){
-		count++;
 		if(eObj.name == name){
 			cout<<"\ndoing update"<<endl;
 			cout<<eObj.EID<<setw(15)<<eObj.name<<setw(15)<<eObj.designation<<setw(15)<<eObj.salary<<endl;
 			readData();
-			finout.seekp((count-1)*sizeof(eObj),ios::beg);
+			finout.seekp(-(sizeof(eObj)),ios::cur);
 			finout.write((char*)&eObj,sizeof(eObj));
 			return;
 		}
