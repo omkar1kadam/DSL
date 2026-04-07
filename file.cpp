@@ -21,7 +21,7 @@ class SequentialFile{
 		void updateRecord_NOT_USING(string oldname,string newname);
 		void updateRecord(string name);
 		void searchRecord(string);
-		void deleteRecord();
+		void deleteRecord(string);
 		void displayRecord();
 };
 
@@ -38,16 +38,16 @@ void SequentialFile::readData(){
 
 void SequentialFile::displayData(){
 	cout<<" "<<endl;
-     cout<<"Employee Id: "<<eObj.EID<<endl;
-     cout<<"Employee name: "<<eObj.name<<endl;
-     cout<<"Employee designation: "<<eObj.designation<<endl;
-     cout<<"Employee salary: "<<eObj.salary<<endl;
+     	cout<<"Employee Id: "<<eObj.EID<<endl;
+     	cout<<"Employee name: "<<eObj.name<<endl;
+     	cout<<"Employee designation: "<<eObj.designation<<endl;
+     	cout<<"Employee salary: "<<eObj.salary<<endl;
         
 }
 
 void SequentialFile::insertRecord(){
 	fstream fout;
-     fout.open("employee.txt",ios::app | ios::binary);
+     	fout.open("employee.txt",ios::app | ios::binary);
 	readData();
 	fout.write((char*)&eObj,sizeof(eObj));
 	fout.close();
@@ -56,7 +56,7 @@ void SequentialFile::insertRecord(){
 void SequentialFile::displayRecord(){
 	cout<<"displaying Records: "<<endl;
 	fstream fin;
-     fin.open("employee.txt",ios::in | ios::binary);
+     	fin.open("employee.txt",ios::in | ios::binary);
 	while(fin.read((char*)&eObj,sizeof(eObj))){
 		cout<<eObj.EID<<setw(15)<<eObj.name<<setw(15)<<eObj.designation<<setw(15)<<eObj.salary<<endl;
 	}
@@ -65,7 +65,7 @@ void SequentialFile::displayRecord(){
 
 void SequentialFile::searchRecord(string name){
 	fstream fin;
-     fin.open("employee.txt",ios::in | ios::binary);
+     	fin.open("employee.txt",ios::in | ios::binary);
 	while(fin.read((char*)&eObj,sizeof(eObj))){
 		if(eObj.name == name){
 			cout<<"\nRecord Found"<<endl;
@@ -79,7 +79,7 @@ void SequentialFile::searchRecord(string name){
 
 void SequentialFile::updateRecord_NOT_USING(string oldname,string newname){
 	fstream finout;
-     finout.open("employee.txt",ios::in | ios::out | ios::binary);
+     	finout.open("employee.txt",ios::in | ios::out | ios::binary);
 	while(finout.read((char*)&eObj,sizeof(eObj))){
 		if(eObj.name == oldname){
 			cout<<"\ndoing update"<<endl;
@@ -93,7 +93,7 @@ void SequentialFile::updateRecord_NOT_USING(string oldname,string newname){
 
 void SequentialFile::updateRecord(string name){
 	fstream finout;
-     finout.open("employee.txt",ios::in | ios::out | ios::binary);
+     	finout.open("employee.txt",ios::in | ios::out | ios::binary);
 	while(finout.read((char*)&eObj,sizeof(eObj))){
 		if(eObj.name == name){
 			cout<<"\ndoing update"<<endl;
@@ -107,6 +107,23 @@ void SequentialFile::updateRecord(string name){
 	finout.close();
 }
 
+void SequentialFile::deleteRecord(string name){
+	fstream in;
+	fstream out;
+	out.open("temp.txt",ios::out | ios::binary);
+	
+    	in.open("employee.txt",ios::in | ios::binary);
+	while(in.read((char*)&eObj,sizeof(eObj))){
+		if(eObj.name != name){
+			out.write((char*)&eObj,sizeof(eObj));
+		}	
+	}
+	in.close();
+	out.close();
+	remove("employee.txt");
+	rename("temp.txt","employee.txt");
+}
+
 int main(){
 	cout<<"Program starting"<<endl;
 	SequentialFile sf;
@@ -115,8 +132,13 @@ int main(){
 	sf.insertRecord();
 	sf.insertRecord();
 	sf.displayRecord();
+	cout<<"Searching: "<<endl;
 	sf.searchRecord("omkar");
+	cout<<"Updating: "<<endl;
 	sf.updateRecord("omkar");
+	sf.displayRecord();
+	cout<<"Deleting: "<<endl;
+	sf.deleteRecord("person");
 	sf.displayRecord();
 	
 	return 0;
