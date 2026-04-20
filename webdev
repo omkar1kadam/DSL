@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+    </head>
+    <body>
+        <form method="POST" action="form.php">
+            Name:
+            <input type="text" name="name" required><br><br>
+            Email:
+            <input type="email" name="email" required><br><br>
+            Age:
+            <input type="number" name="age" required><br><br>
+
+            Gender:
+            <input type="radio" name="Gender" value="Male" required>Male
+            <input type="radio" name="Gender" value="Female" required>Female
+            <br><br>
+
+            Skills:
+            <input type="checkbox" name="skills[]" value="PHP">PHP<br>
+            <input type="checkbox" name="skills[]" value="HTML">HTML<br>
+            <input type="checkbox" name="skills[]" value="CSS">CSS<br>
+            <input type="checkbox" name="skills[]" value="JAVA">JAVA<br>
+
+            Address:
+            <textarea name="address" rows="3" cols="30"></textarea>
+            <br><br>
+
+            <input type="submit" name="submit" value="Save">
+        </form>
+    </body>
+</html>
+
+
+
+<?php
+
+if( isset($_POST["submit"])){
+    $conn = mysqli_connect("localhost","root","","College");
+
+    if(!$conn){
+        die("connection failed:".mysqli_connect_error());
+    }
+
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $age = $_POST['age'];
+    $gender = $_POST['gender'];
+    $address = $_POST['address'];
+
+    if(!empty($_POST['skills'])){
+        $skills = implode(",",$_POST['skills']);
+    } else {
+        $skills = "";
+    }
+    $sql = "INSERT INTO student (name,email,age,gender,skills,adress) VALUES('$name','$email','$age','$gender','$skills','$address')";
+
+    if(mysqli_query($conn,$sql)){
+        echo "<br> Data saved successfully!";
+    }else {
+        echo "Error: ".mysqli_error($conn);
+    }
+
+    mysqli_close($conn);
+}
+?>
